@@ -14,7 +14,8 @@ def test_registry_contains_paper_datasets():
         'UF-PoP-Iter/train',
         'UF-PoP-Random/train',
         'UF-PoP-Random-k16/train',
-        'UF-PoP-Iter-corrupt-0.5/train',
+        'UF-PoP-Iter-noise-uniform-0.5/train',
+        'UF-PoP-Random-noise-bt-temp-4/train',
     ):
         assert name in names, name
 

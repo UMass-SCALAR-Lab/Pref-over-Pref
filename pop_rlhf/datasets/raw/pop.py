@@ -8,7 +8,8 @@ Each PoP record pairs a *stronger* preference with a *weaker* one
     UF-PoP-Iter/train                     PoP-iter  (each preference vs. k weaker ones)
     UF-PoP-Random/train                   PoP-random (random pairs ordered by margin)
     UF-PoP-{Iter,Random}-k{1,2,4,8,16}/train   scale-of-PoP ablation
-    UF-PoP-{Iter,Random}-corrupt-{p}/train     label-noise ablation (p in 0.1,0.3,0.5,0.7,0.9)
+    UF-PoP-{Iter,Random}-noise-uniform-{p}/train   label noise: swap p of the records (p in 0.1,0.3,0.5,0.7,0.9)
+    UF-PoP-{Iter,Random}-noise-bt-temp-{T}/train   Bradley-Terry label noise (T in 1,2,4,8,16)
 """
 
 from __future__ import annotations
@@ -105,6 +106,8 @@ for _kind in ('iter', 'random'):
     _tag = _kind.capitalize()
     for _k in (1, 2, 4, 8, 16):  # PoP scale |D_PoP| = k |D_pref|
         _register(f'UF-PoP-{_tag}-k{_k}/train', f'pop/{_kind}_k{_k}/train')
-    for _p in ('0.1', '0.3', '0.5', '0.7', '0.9'):  # fraction of flipped PoP labels
-        _register(f'UF-PoP-{_tag}-corrupt-{_p}/train', f'pop/{_kind}_corrupt-{_p}/train')
+    for _p in ('0.1', '0.3', '0.5', '0.7', '0.9'):  # fraction of swapped (wrong) labels
+        _register(f'UF-PoP-{_tag}-noise-uniform-{_p}/train', f'pop/{_kind}_noise-uniform-{_p}/train')
+    for _t in (1, 2, 4, 8, 16):  # Bradley-Terry temperature
+        _register(f'UF-PoP-{_tag}-noise-bt-temp-{_t}/train', f'pop/{_kind}_noise-bt-temp-{_t}/train')
 

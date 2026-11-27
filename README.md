@@ -61,7 +61,8 @@ file headers), and `slurm/smoke.sbatch` runs every stage for a few steps as an e
 
 `--train_datasets` accepts: `ultrafeedback-sft`, `ultrafeedback-pref/{train,test}`,
 `ultrafeedback-pref-nomargin/{train,test}`, `UF-PoP-Iter/train`, `UF-PoP-Random/train`, `UF-PoP-4k/train`,
-`UF-PoP-{Iter,Random}-k{1,2,4,8,16}/train` and `UF-PoP-{Iter,Random}-corrupt-{0.1,0.3,0.5,0.7,0.9}/train`.
+`UF-PoP-{Iter,Random}-k{1,2,4,8,16}/train` and `UF-PoP-{Iter,Random}-noise-uniform-{0.1,0.3,0.5,0.7,0.9}/train` and
+`UF-PoP-{Iter,Random}-noise-bt-temp-{1,2,4,8,16}/train`.
 Append `:<fraction>` to use a subset, e.g. `UF-PoP-Random/train:0.1`.
 
 `UF-PoP-Iter/train` and `UF-PoP-Random/train` are downloaded automatically from the Hugging Face Hub

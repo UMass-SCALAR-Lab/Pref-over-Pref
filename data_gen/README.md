@@ -19,7 +19,8 @@ and `OPENAI_API_KEY`.
 | `pop/iter/test` | `python data_gen/build_pop.py --mode iter --split test_prefs` |
 | `pop/iter_4k/train` | `python data_gen/build_pop.py --mode iter --subset_size 4000 --k 1 --out pop/iter_4k/train` |
 | `pop/{iter,random}_k{K}/train` | `python data_gen/build_pop.py --mode iter --k 8` (default `--out` is `pop/{mode}_k{k}/train` for k != 2) |
-| `pop/{iter,random}_corrupt-{p}/train` | `python data_gen/corrupt_pop.py --kind iter` (flips a fraction `p` of labels of `pop/{kind}/train`) |
+| `pop/{iter,random}_noise-uniform-{p}/train` | `python data_gen/add_label_noise.py --kind iter --mode uniform` (swaps a fraction `p` of the records; reads `pop/{kind}/train`) |
+| `pop/{iter,random}_noise-bt-temp-{T}/train` | `python data_gen/add_label_noise.py --kind iter --mode bt` (Bradley-Terry noise, temperature `T`) |
 | `pop/random_llm_annotated/size_{N}` | `python data_gen/annotate_pop_llm.py --num_prefs 5000 --k 2` |
 
 Options of `build_pop.py`: `--k` (PoP size is `k` times the number of preferences), `--seed` (default 42),
@@ -37,4 +38,13 @@ Options of `build_pop.py`: `--k` (PoP size is `k` times the number of preference
 - Empty or identical chosen/rejected responses are filtered out of the training split.
 
 `pop_to_pref.py` extracts the stronger preference of every PoP record into a plain preference dataset.
-`corrupt_pop.py --mode bt` instead flips labels with a Bradley-Terry temperature noise model.
+
+## Label noise
+
+`add_label_noise.py` swaps the stronger and weaker preference of some records, which makes their label wrong.
+Output datasets keep all columns and add a 0/1 `flipped` column. For swapped records all `pref_*` / `unpref_*` columns
+are swapped; `pop_gap` is left unchanged.
+
+- `--mode uniform`: each record is swapped independently with probability `p` (`--flip_probs`).
+- `--mode bt`: each record is swapped with probability `sigmoid(pop_gap / T)` (`--temperatures`), so records with a
+  larger margin difference are swapped more often, and a larger `T` moves the swap probability towards 0.5.

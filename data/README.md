@@ -17,5 +17,5 @@ load_dataset("yaswanthchittepu/pop-uf", "iter", split="train").save_to_disk("dat
 load_dataset("yaswanthchittepu/pop-uf", "random", split="train").save_to_disk("data/pop/random/train")
 ```
 
-The other sets (`pop/iter_4k/train`, `pop/{iter,random}_k{K}/train`, `pop/{iter,random}_corrupt-{p}/train`) are built
+The other sets (`pop/iter_4k/train`, `pop/{iter,random}_k{K}/train`, `pop/{iter,random}_noise-uniform-{p}/train`, `pop/{iter,random}_noise-bt-temp-{T}/train`) are built
 with the scripts in `data_gen/`.
