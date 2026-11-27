@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pop-rlhf"
+dynamic = ["version"]
+description = "Adaptive Margin RLHF via Preference over Preferences (DPO-PoP)"
+readme = "README.md"
+requires-python = ">= 3.10"
+license = { text = "Apache-2.0" }
+dependencies = [
+    "torch >= 2.1",
+    "transformers >= 4.37",
+    "datasets",
+    "tokenizers >= 0.13.3",
+    "accelerate",
+    "deepspeed",
+    "numpy",
+    "scipy",
+    "sentencepiece",
+    "wandb",
+    "optree",
+    "tqdm",
+    "rich",
+    "typing_extensions",
+]
+
+[project.optional-dependencies]
+eval = ["matplotlib", "pandas", "openai", "alpaca-eval", "vllm"]
+dev = ["ruff", "pytest"]
+
+[tool.setuptools.dynamic]
+version = { attr = "pop_rlhf.version.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["pop_rlhf*"]
+
+[tool.setuptools.package-data]
+pop_rlhf = ["configs/*.json"]
+
+[tool.ruff]
+line-length = 120

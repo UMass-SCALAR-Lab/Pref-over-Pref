@@ -1,0 +1,17 @@
+__pycache__/
+*.egg-info/
+.venv/
+runs/
+logs/*
+!logs/.gitkeep
+data/*
+!data/README.md
+wandb/
+outputs/
+results/
+*.npz
+*.pkl
+*.out
+*.err
+.env
+.DS_Store
